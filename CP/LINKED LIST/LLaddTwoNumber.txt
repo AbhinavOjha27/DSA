@@ -1,0 +1,89 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+class Node{
+public:
+	int Data;
+	Node*next;
+	Node(int d){
+		Data = d;
+		next = NULL;
+	}
+};
+Node*reverse(Node*head){
+	Node*curr = head;
+	Node*prev = NULL;
+	Node*Next = NULL;
+
+	while(curr!= NULL){
+		Next = curr->next;
+		curr->next = prev;
+		prev = curr;
+		curr = Next;
+	}return prev;
+}
+Node*addTwoList(Node*head1,Node*head2){
+	head1 = reverse(head1);
+	head2 = reverse(head2);
+
+	int carry = 0;
+	int sum = 0;
+	Node*temp;
+	Node*res = NULL;
+	Node*curr = NULL;
+
+	while(head1!= NULL || head2!= NULL){
+		sum = carry + (head1 ? head1->Data : 0) + (head2 ? head2->Data : 0);
+		carry = (sum>=10)?1:0;
+		sum = sum%10;
+		temp = new Node(sum);
+		if(res==NULL){
+			res = temp;
+		}else{
+			curr->next = temp;
+		}
+		curr = temp;
+		if(head1)
+			head1 = head1->next;
+		if(head2)
+			head2 = head2->next;
+	}
+	if(carry>0){
+		temp = new Node(carry);
+		curr->next = temp;
+		curr = temp;
+	}
+	res = reverse(res);
+	return res;
+}
+void printList(Node*head){
+	Node*temp = head;
+	while(temp!= NULL){
+		cout<<temp->Data<<" ";
+		temp = temp->next;
+	}
+	cout<<endl;
+}
+
+int main(){
+
+    Node*result = NULL;
+
+	Node*head1 = new Node(4);
+	Node*second1 = new Node(9);
+	Node*third1 = new Node(5);
+
+	head1->next =  second1;
+	second1->next = third1;
+
+	Node*head2 = new Node(9);
+	Node*second2 = new Node(7);
+	Node*third2 = new Node(3);
+
+	head2->next = second2;
+	second2->next = third2;
+
+    result = addTwoList(head1,head2);
+    printList(result);
+    return 0;
+}

@@ -1,0 +1,67 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+class Node{
+public:
+	int Data;
+	Node*next;
+	Node(int d){
+    Data = d;
+    next = NULL;
+	}
+};
+
+void deleteAlternate(Node*head){
+	Node*curr = head;
+	Node*Next = head->next;
+
+	while(curr!= NULL && Next!= NULL){
+		curr->next = Next->next;
+		delete(Next);
+		curr = curr->next;
+		if(curr!= NULL){
+			Next = curr->next;
+		}
+	}
+}
+
+void printList(Node*head){
+	Node*temp = head;
+	while(temp!= NULL){
+		cout<<temp->Data<<" ";
+		temp = temp->next;
+	}
+	cout<<endl;
+}
+
+int main(){
+
+	Node*res = NULL;
+
+	Node*head = new Node(2);
+	Node*second = new Node(6);
+	Node*third= new Node(9);
+	Node*fourth = new Node(10);
+	Node*fifth = new Node(12);
+	Node*sixth  = new Node(15);
+	Node*seventh = new Node(20);
+
+	head->next =  second;
+	second->next = third;
+	third->next = fourth;
+	fourth->next = fifth;
+	fifth->next = sixth;
+	sixth->next = seventh;
+
+	cout<<"Linked List before deletion\n";
+	printList(head);
+
+	cout<<"Linked List after deletion\n";
+	deleteAlternate(head);
+	printList(head);
+	
+	return 0;  
+}
+
+
+   

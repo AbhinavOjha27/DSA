@@ -1,0 +1,54 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+class Node{
+public:
+	int Data;
+	Node*next;
+	Node(int d){
+    Data = d;
+    next = NULL;
+    }
+};
+bool isPalindrom(Node*head){
+	Node*slow = head;
+
+	stack<int> s;
+
+	while(slow!= NULL){
+		s.push(slow->Data);
+		slow = slow->next;
+	}
+
+	while(head!= NULL){
+		int i = s.top();
+		s.pop();
+		if(head->Data!= i){
+			return false;
+		}
+		head = head->next;
+	}
+	return true;
+}
+
+int main(){
+
+	Node*head = new Node(10);
+	Node*second = new Node(20);
+	Node*third = new Node(30);
+	Node*fourth = new Node(40);
+
+	head->next = second;
+	second->next = third;
+	third->next = fourth;
+    
+    int  result = isPalindrom(head);
+    if (result== 1){
+    	cout<<"isPalindrom is True\n";
+    } 
+    else{
+    	cout<<"isPalindrom is False\n";
+    }
+
+	return 0;
+}

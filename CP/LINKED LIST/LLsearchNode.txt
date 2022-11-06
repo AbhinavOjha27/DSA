@@ -1,0 +1,47 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+class Node{
+	public: 
+		int Data;
+		Node*next;
+		Node(int d){
+			Data = d;
+			next = NULL;
+		}
+};
+/* ITERATIVE METHOD
+
+bool search(Node*head, int key){
+	Node*temp = head;
+	while(temp!= NULL){
+		if(temp->Data==key)
+			return true;
+       temp = temp->next;
+	}
+	return false;
+}
+*/
+
+RECURSIVE METHOD
+
+bool search(Node*head, int key){
+	if(head==NULL)
+		return false;
+	if(head->Data==key)
+		return true;
+	return search(head->next , key);
+}
+
+
+int main(){
+	Node*head = new Node(10);
+	Node*Second = new Node(20);
+	Node*Third = new Node(30);
+
+	head->next = Second;
+	Second->next = Third;
+    
+    search(head, 40) ? cout<<"YES" : cout<<"NO";
+	return 0;
+}

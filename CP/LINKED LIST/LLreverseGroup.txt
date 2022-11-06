@@ -1,0 +1,71 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+class Node{
+public:
+	int Data;
+	Node*next;
+	Node(int d){
+    Data = d;
+    next = NULL;
+	}
+};
+
+Node*reverse(Node*head, int k){
+
+	Node*curr = head;
+	Node*prev = NULL;
+	Node*next = NULL;
+	int count = 0;
+
+	while(curr!= NULL && count<k){
+		next = curr->next;
+		curr->next = prev;
+		prev = curr;
+		curr = next;
+		count++;
+	}
+
+	if(next!= NULL){
+	  head->next = reverse(next, k);
+	}
+	return prev;
+}
+
+void printList(Node*head){
+	Node*temp = head;
+	while(temp!= NULL){
+		cout<<temp->Data<<" ";
+		temp = temp->next;
+	}
+	cout<<endl;
+}
+
+int main(){
+
+	Node*res = NULL;
+
+	Node*head = new Node(2);
+	Node*second = new Node(6);
+	Node*third= new Node(9);
+	Node*fourth = new Node(10);
+	Node*fifth = new Node(12);
+
+	head->next =  second;
+	second->next = third;
+	third->next = fourth;
+	fourth->next = fifth;
+        
+        
+	cout<<"Linked list Before reversing\n";
+	printList(head);
+
+	cout<<"\nLinked list after reversing\n";
+	res = reverse(head,2);
+	printList(res);
+	
+	return 0;  
+}
+
+
+   

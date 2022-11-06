@@ -1,0 +1,104 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+class Node{
+public:
+	int Data;
+	Node*next;
+	Node(int d){
+    Data = d;
+    next = NULL;
+	}
+};
+
+Node*mergeList(Node*left, Node*right){
+
+	Node*result = NULL;
+
+	if(left==NULL)
+		return right;
+
+    if (right==NULL)
+		return left;
+
+	if(left->Data < right->Data){
+		result = left;
+		result->next = mergeList(left->next, right);
+	}else{
+		result = right;
+		result->next = mergeList(left, right->next);
+	}
+	return result;
+}
+
+void splitList(Node*start, Node**left, Node**right){
+	Node*slow = start;
+	Node*fast = start->next;
+
+    while(fast!= NULL){
+    	fast = fast->next;
+    	if(fast!= NULL){
+    		slow = slow->next;
+    		fast = fast->next;
+    	}
+    }
+    *left = start;
+    *right  = slow->next;
+    slow->next = NULL;
+}
+
+void mergeSort(Node**start){
+	Node*head = *start;
+	Node*left;
+	Node*right;
+
+	if(head==NULL || head->next==NULL)
+		return;
+	splitList(head, &left, &right);
+
+	mergeSort(&left);
+	mergeSort(&right);
+
+	*start = mergeList(left, right);
+	return;
+}
+
+void printList(Node*head){
+	Node*temp = head;
+	while(temp!= NULL){
+		cout<<temp->Data<<" ";
+		temp = temp->next;
+	}
+	cout<<endl;
+}
+
+
+int main(){
+
+	Node*head = new Node(2);
+	Node*second = new Node(6);
+	Node*third = new Node(9);
+	Node*fourth = new Node(10);
+	Node*fifth = new Node(12);
+	Node*sixth  = new Node(15);
+	Node*seventh = new Node(20);
+
+	head->next =  second;
+	second->next = third;
+	third->next = fourth;
+	fourth->next = fifth;
+	fifth->next = sixth;
+	sixth->next = seventh;
+
+	cout<<"Before MergeSort The Linked List is\n";
+	printList(head);
+    
+    mergeSort(&head);
+    cout<<"After MergeSort The Linked List is\n";
+    printList(head);
+	return 0;
+}
+
+
+
+   

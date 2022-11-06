@@ -1,0 +1,81 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+class Node{
+public:
+	int Data;
+	Node*next;
+	Node(int d){
+    Data = d;
+    next = NULL;
+	}
+};
+
+void printList(Node*head){
+	Node*temp = head;
+	while(temp!= NULL){
+		cout<<temp->Data<<" ";
+		temp = temp->next;
+	}
+	cout<<endl;
+}
+Node* last_node(Node*head){
+	Node*temp = head;
+	while(temp!= NULL && temp->next!= NULL){
+		temp = temp->next;
+	}
+	return temp;
+}
+Node* check(Node*first, Node*last){
+
+	Node*front = first;
+	Node*pivot = first;
+
+	while(front!= NULL && front!= last){
+     
+    if(front->Data < last->Data){
+    	pivot = first;
+    	swap(first->Data, front->Data);
+    	first = first->next;
+    }
+    front = front->next;
+ }
+ swap(first->Data, last->Data);
+ return pivot;
+}
+	
+void quick_sort(Node*first, Node*last){
+	if(first == last)
+		return;
+	Node*pivot = check(first , last);
+	if(pivot!= NULL && pivot->next!= NULL){
+		quick_sort(pivot->next, last);
+	}
+    if(pivot!= NULL && first!= pivot){
+    	quick_sort(first, pivot);	
+    }
+}
+
+
+int main(){
+
+	Node*head = new Node(20);
+	Node*second = new Node(6);
+	Node*third = new Node(9);
+	Node*fourth = new Node(7);
+	Node*fifth = new Node(10);
+
+	head->next =  second;
+	second->next = third;
+	third->next = fourth;
+	fourth->next = fifth;
+
+	cout<<"\n Before sort ";
+	printList(head);
+ 
+    cout<<"After sort! "; 
+    quick_sort(head, last_node(head));
+	printList(head);
+
+	return 0;  
+}

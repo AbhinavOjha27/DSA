@@ -1,0 +1,23 @@
+Node*merge(Node*a, Node*b){
+	Node*result;
+
+	if(a->Data<b->Data){
+		result = a;
+		result->Bottom = merge(a->Bottm, b);
+	}else{
+		result = a;
+		result->Bottom = merge(a, b->Bottom);
+	}
+	return result;
+}
+Node*flatten(Node*head){
+
+	if(head == NULL || head->next == NULL)
+		return head;
+ 
+  Node*down = head;
+  down->next = NULL;
+  Node*right = flatten(head->right);
+  Node*ans = merge(down,right);
+  return ans;
+}

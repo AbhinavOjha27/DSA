@@ -1,0 +1,57 @@
+#include<bits/stdc++.h>
+using namespace std;
+
+class Node{
+public:
+	int Data;
+	Node*next;
+	Node(int d){
+    Data = d;
+    next = NULL;
+    }
+};
+void reverse(Node*head){
+	Node*curr = head;
+	Node*prev = NULL;
+
+	while(curr!= NULL){
+		Node*temp = curr->next;
+		curr->next = prev;
+		prev = curr;
+		curr = temp;
+	}
+	head = prev;
+
+	Node*tempo = head;
+	while(tempo!= NULL){
+		cout<<tempo->Data<<" ";
+		tempo = tempo->next;
+	}
+	cout<<endl;
+}
+void Print(Node*head){
+	Node*temp = head;
+	while(temp!= NULL){
+		cout<<temp->Data<<" ";
+		temp = temp->next;
+	}
+	cout<< endl;
+}
+
+int main(){
+
+	Node*head = new Node(10);
+	Node*second = new Node(20);
+	Node*third = new Node(30);
+	Node*fourth = new Node(40);
+
+	head->next = second;
+	second->next = third;
+	third->next = fourth;
+    
+    Print(head);
+	reverse(head);
+	
+
+	return 0;
+}
